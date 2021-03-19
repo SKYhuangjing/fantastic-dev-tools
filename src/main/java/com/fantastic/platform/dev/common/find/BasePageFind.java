@@ -2,7 +2,7 @@
  * Zenlayer.com Inc.
  * Copyright (c) 2014-2021 All Rights Reserved.
  */
-package com.fantastic.platform.dev.common;
+package com.fantastic.platform.dev.common.find;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,8 +16,8 @@ import lombok.Data;
 public class BasePageFind extends BaseFind {
 
     @ApiModelProperty("分页码")
-    private int pageNum;
+    private int pageNum = 1;
 
     @ApiModelProperty("单页数量")
-    private int pageSize;
+    private int pageSize = 20;
 }

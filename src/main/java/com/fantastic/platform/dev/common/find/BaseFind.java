@@ -2,10 +2,12 @@
  * Zenlayer.com Inc.
  * Copyright (c) 2014-2021 All Rights Reserved.
  */
-package com.fantastic.platform.dev.common;
+package com.fantastic.platform.dev.common.find;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author sky
@@ -13,7 +15,7 @@ import lombok.Data;
  * @version $ Id: BaseFind.java, v 0.1  sky Exp $
  */
 @Data
-public class BaseFind {
+public class BaseFind implements Serializable {
 
     @ApiModelProperty("模糊搜索字段")
     private String fuzzyQueryValue;
