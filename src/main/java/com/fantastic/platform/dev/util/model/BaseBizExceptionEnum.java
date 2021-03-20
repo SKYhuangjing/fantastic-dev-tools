@@ -26,7 +26,24 @@ public enum BaseBizExceptionEnum implements BizExceptionEnumInterface {
     /**
      * 403
      */
-    FORBIDDEN(403, "Forbidden");
+    FORBIDDEN(403, "Forbidden"),
+
+    METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
+
+    /**
+     *入参不能为空
+     */
+    INVALID_REQUEST_BODY(101, "request param is not allow null"),
+
+    /**
+     * 远程服务异常
+     */
+    REMOTE_SERVICE_ERROR(1501, "remote service is error"),
+
+    /**
+     * 数据流为空
+     */
+    REMOTE_DATA_STREAM_ERROR(1501, "remote data stream is error");
 
     private String msg;
     private int    ret;
