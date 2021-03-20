@@ -5,21 +5,40 @@
 package com.fantastic.platform.dev.util.model;
 
 public enum BaseBizExceptionEnum implements BizExceptionEnumInterface {
-    UNEXPECTED_ERROR(1, "UNEXPECTED_ERROR", "UNEXPECTED_ERROR");
+    UNEXPECTED_ERROR(1, "UNEXPECTED_ERROR"),
 
-    private String code;
+    // common exception
+    /**
+     * 500
+     */
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+
+    /**
+     * 400
+     */
+    BAD_REQUEST(400, "Bad Request"),
+
+    /**
+     * 401
+     */
+    UNAUTHORIZED(401, "Unauthorized"),
+
+    /**
+     * 403
+     */
+    FORBIDDEN(403, "Forbidden");
+
     private String msg;
     private int    ret;
 
-    private BaseBizExceptionEnum(int ret, String code, String msg) {
-        this.code = code;
+    private BaseBizExceptionEnum(int ret, String msg) {
         this.msg = msg;
         this.ret = ret;
     }
 
     @Override
     public String getCode() {
-        return this.code;
+        return this.name();
     }
 
     @Override

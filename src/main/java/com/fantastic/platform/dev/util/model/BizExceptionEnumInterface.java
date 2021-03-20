@@ -5,6 +5,7 @@
 package com.fantastic.platform.dev.util.model;
 
 public interface BizExceptionEnumInterface {
+
     String getCode();
 
     String getMsg();
