@@ -4,6 +4,8 @@
  */
 package com.fantastic.platform.dev.common.dao.base.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fantastic.platform.dev.common.dao.base.BaseDAO;
 import com.fantastic.platform.dev.common.dao.base.Converter;
 import com.fantastic.platform.dev.util.PageInfoUtil;
@@ -13,9 +15,11 @@ import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class BaseDAOImpl<T, D extends Mapper<T>> implements BaseDAO<T> {
@@ -47,6 +51,11 @@ public abstract class BaseDAOImpl<T, D extends Mapper<T>> implements BaseDAO<T> 
      */
     protected abstract List<String> getDOQueryColumns();
 
+    protected Criteria createDefaultCriteria(Example example) {
+        Criteria criteria = example.createCriteria();
+        return criteria;
+    }
+
     @Autowired
     private D mapper;
 
@@ -62,7 +71,7 @@ public abstract class BaseDAOImpl<T, D extends Mapper<T>> implements BaseDAO<T> 
             Example example = new Example(getDOClass());
             List<String> queryColumns = getDOQueryColumns();
 
-            Example.Criteria criteria = example.createCriteria();
+            Example.Criteria criteria = createDefaultCriteria(example);
             if (queryColumns != null && !queryColumns.isEmpty()) {
                 for (String queryColumn : queryColumns) {
                     criteria.orLike(queryColumn, addWildcard4Query() ? String.join("", "%", queryValue, "%") : queryValue);
@@ -86,7 +95,7 @@ public abstract class BaseDAOImpl<T, D extends Mapper<T>> implements BaseDAO<T> 
     @Override
     public T findById(Integer id) {
         Example example = new Example(getDOClass());
-        example.createCriteria().andEqualTo(getDOIdColumn(), id);
+        createDefaultCriteria(example).andEqualTo(getDOIdColumn(), id);
 
         T one = mapper.selectOneByExample(example);
         return one;
@@ -108,5 +117,30 @@ public abstract class BaseDAOImpl<T, D extends Mapper<T>> implements BaseDAO<T> 
     public boolean delete(Integer id) {
         int effectRows = mapper.deleteByPrimaryKey(id);
         return effectRows > 0;
+    }
+
+    @Override
+    public boolean checkUnique(String property, Object value) {
+        if (StrUtil.isNotBlank(property) && value != null) {
+            Example example = new Example(getDOClass());
+            example.createCriteria().andEqualTo(property, value);
+            return getMapper().selectCountByExample(example) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkUnique(Map<String, Object> valueByProperty) {
+        if (CollUtil.isEmpty(valueByProperty)) {
+            return false;
+        }
+        Example example = new Example(getDOClass());
+        Criteria criteria = createDefaultCriteria(example);
+        valueByProperty.entrySet().stream().forEach(entry -> {
+            if (StrUtil.isNotBlank(entry.getKey()) && entry.getValue() != null) {
+                criteria.andEqualTo(entry.getKey(), entry.getValue());
+            }
+        });
+        return getMapper().selectCountByExample(example) > 0;
     }
 }

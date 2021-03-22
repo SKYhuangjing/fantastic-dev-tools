@@ -7,6 +7,7 @@ package com.fantastic.platform.dev.common.dao.base;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BaseDAO<T> {
     List<T> list(String queryValue);
@@ -20,4 +21,8 @@ public interface BaseDAO<T> {
     boolean update(T t);
 
     boolean delete(Integer id);
+
+    boolean checkUnique(String property, Object value);
+
+    boolean checkUnique(Map<String, Object> valueByProperty);
 }

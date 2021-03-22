@@ -15,27 +15,35 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <springboot.version>2.4.3</springboot.version>
         <swagger.version>3.0.0</swagger.version>
         <hutool.version>5.6.0</hutool.version>
         <pagehelper.version>5.2.0</pagehelper.version>
+        <lombok.version>1.18.18</lombok.version>
+        <mapper.version>1.1.5</mapper.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>2.4.3</version>
+            <version>${springboot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.4.3</version>
+            <version>${springboot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${springboot.version}</version>
         </dependency>
         <!-- lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.18</version>
+            <version>${lombok.version}</version>
         </dependency>
         <!--Swagger -->
         <dependency>
@@ -61,14 +69,14 @@
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-base</artifactId>
-            <version>1.1.5</version>
+            <version>${mapper.version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-core</artifactId>
-            <version>1.1.5</version>
+            <version>${mapper.version}</version>
         </dependency>
     </dependencies>
 

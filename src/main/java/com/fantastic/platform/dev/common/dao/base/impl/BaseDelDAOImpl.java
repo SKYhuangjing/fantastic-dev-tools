@@ -96,8 +96,9 @@ public abstract class BaseDelDAOImpl<T, D extends Mapper<T>> extends BaseDAOImpl
         return Optional.of(ColumnConstant.DELETE_TIME_FIELD);
     }
 
+    @Override
     protected Criteria createDefaultCriteria(Example example) {
-        Criteria criteria = example.createCriteria();
+        Criteria criteria = super.createDefaultCriteria(example);
         getDODelField().ifPresent(column -> criteria.andEqualTo(column, DelEnum.NOT_DEL.getValue()));
         return criteria;
     }
