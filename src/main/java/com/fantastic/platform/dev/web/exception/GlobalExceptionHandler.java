@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     public ResultInfo bizExceptionHandler(BizException e) {
         ResultInfo<String> result = new ResultInfo<>();
         result.fail(e.getExceptionRet(), e.getExceptionCode(), e.getMessage());
-        logger.error("biz error =>", e);
+        logger.warn("biz error =>", e);
         return result;
     }
 

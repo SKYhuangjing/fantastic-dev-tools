@@ -13,7 +13,7 @@ import lombok.Data;
  * @version $ Id: BaseUidResponse.java, v 0.1  sky Exp $
  */
 @Data
-public class BaseUidResponse {
+public class BaseUidResponse extends BaseBizResponse {
 
     @ApiModelProperty("ID")
     private String uid;
