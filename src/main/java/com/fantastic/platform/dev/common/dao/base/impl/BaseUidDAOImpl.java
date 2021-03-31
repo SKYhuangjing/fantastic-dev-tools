@@ -7,6 +7,7 @@ package com.fantastic.platform.dev.common.dao.base.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fantastic.platform.dev.common.constant.ColumnConstant;
 import com.fantastic.platform.dev.common.dao.base.BaseUidDAO;
 import com.fantastic.platform.dev.common.dao.model.enums.DelEnum;
@@ -51,6 +52,9 @@ public abstract class BaseUidDAOImpl<T, Q extends QuickSearchQueryDTO, D extends
 
     @Override
     public T findByUid(String uid) {
+        if (StrUtil.isBlank(uid)) {
+            return null;
+        }
         Example example = new Example(getDOClass());
         Criteria criteria = createDefaultCriteria(example);
         criteria.andEqualTo(getDOUIdField(), uid);
@@ -72,6 +76,9 @@ public abstract class BaseUidDAOImpl<T, Q extends QuickSearchQueryDTO, D extends
 
     @Override
     public boolean deleteByUid(String uid) {
+        if (StrUtil.isBlank(uid)) {
+            return false;
+        }
         if (getDODelField().isPresent()) {
 
             Example example = new Example(getDOClass());
